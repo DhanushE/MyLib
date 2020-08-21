@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Books</title>
+<!-- CSS only -->
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+<!-- JS, Popper.js, and jQuery -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+
+<style>
+
+.center {
+    margin: auto;
+    text-align: center;
+}
+
+.books-title {
+    font-size: 3vw;
+    font-weight: bold;
+    margin-bottom: 1em;
+    margin-top: 2em;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+@media only screen and (max-width: 800px) {
+    .books-title {
+    font-size: 7vw;
+    }
+}
+@media only screen and (max-width: 1200px) {
+    .books-title {
+    font-size: 8vw;
+    }
+}
+
+.space-left {
+    margin-left: 1em;
+}
+
+table {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    border-collapse: collapse;
+    width: 75%;
+    text-align: center;
+    margin: auto;
+}
+
+td, th {
+    border: 1px solid #838383;
+    padding: 8px;
+}
+
+tr {
+    background-color: #d1d0d0;
+}
+
+/*tr:nth-child(even){background-color: #d1d0d0} */
+
+th {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.circle_one {
+    position: absolute;
+    z-index: -100;
+    transform: translate(200%, 30%);
+    background: linear-gradient(to top right, #ff5757, #7c2ae8);
+    width: 200px;
+    height: 200px;
+    border-radius: 150%;
+}
+.circle_two {
+    position: absolute;
+    z-index: -100;
+    transform: translate(-25%, 200%);
+    background: linear-gradient(to top right, #ffde59, #ff914d);
+    width: 100px;
+    height: 100px;
+    border-radius: 150%;
+}
+.circle_three {
+    position: absolute;
+    z-index: -100;
+    transform: translate(-50%, 225%);
+    background: linear-gradient(to top right, #00c4cc, #7c2ae8);
+    width: 300px;
+    height: 300px;
+    border-radius: 150%;
+}
+.circle_four {
+    position: absolute;
+    z-index: -100;
+    transform: translate(100%, 200%);
+    background: linear-gradient(to top right, #7ed957, #008037);
+    width: 350px;
+    height: 350px;
+    border-radius: 150%;
+}
+</style>
+</head>
+<body>
+<!-- Navigation -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light shadow fixed-top">
+    <div class="container">
+        <a class="navbar-brand" href="{{url_for('index')}}">MyLib</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+            </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item active">
+            <a class="nav-link" href="{{url_for('index')}}">Home
+                    <span class="sr-only">(current)</span>
+                </a>
+            </li>
+            <li class="nav-item">
+            <a class="nav-link" href="{{url_for('books')}}">Books</a>
+            </li>
+            <li class="nav-item">
+            <a class="nav-link" href="{{url_for('addbooks')}}">Add</a>
+            </li>
+            <li class="nav-item">
+            <a class="nav-link" href="#">Remove</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Change</a>
+            </li>
+        </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="circle_one"></div>
+<div class="circle_two"></div>
+<div class="circle_three"></div>
+<div class="circle_four"></div>
+
+<h1 class="books-title center">My Books</h1>
+{% if session['amount_of_books'] != 0 %}
+    <h1 class="books-title center" style="margin-top: -0.5em;">You have {{session['amount_of_books']}} books</h1>
+{% endif %}
+
+
+
+<div style="overflow-x:auto;">
+    <table>
+        <tr>
+            <th>Book Title</th>
+            <th>Author</th>
+            <th>Location</th>
+            <th>Genere</th>
+            <th>Series</th>
+            <th>Pages</th>
+            <th>Language</th>
+            <th>Type</th>
+            <th>ID</th>
+        </tr>
+        {% for book in session['books'] %}
+            <tr>
+                <td> {{ book[1] }} </td>
+                <td> {{book[2]}} </td>
+                <td> {{book[3]}} </td>
+                <td> {{book[4]}} </td>
+                <td> {{book[5]}} </td>
+                <td> {{book[6]}} </td>
+                <td> {{book[7]}} </td>
+                <td> {{book[8]}} </td>
+                <td> {{book[0]}} </td>
+            </tr>
+        {% endfor %}
+        
+    </table>
+</div>
+
+
+</body>
+</html>
